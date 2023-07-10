@@ -7,7 +7,8 @@ bsp_uart.c \
 bsp_motor.c \
 bsp_led.c \
 bsp_init.c \
-bsp_scan.c
+bsp_scan.c \
+bsp_chasis.c
 
 APP_C_SOURCES = \
 app_entry.c \

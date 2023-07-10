@@ -12,12 +12,12 @@ void report_task(void *param){
 }
 
 static dn_pid_param_t speed_pid = {
-    .kp = 0.4f,
-    .ki = 0.25f,
-    .kd = 0.3f,
+    .kp = 0.008f,
+    .ki = 0.005f,
+    .kd = 0.01f,
     .err_limit = 10,
-    .integral_limit = 1,
-    .out_limit = 0.9
+    .integral_limit = 10,
+    .out_limit = 0.7
 };
 
 static dn_pid_param_t pos_pid = {
@@ -101,27 +101,27 @@ static void speed_pid_test(){
 }
 
 
-// static void pwm_test(){
-    
-//     bsp_motor_init();
-//     //bsp_task_create("spd rpt", report_task, NULL, osPriorityAboveNormal1, 256);
+static void pwm_test(){
+    bsp_task_create("spd rpt", report_task, NULL, osPriorityAboveNormal1, 256);
 
-//     while(1){
-//         //printf("input new pwm\n");
-//         float s1, s2;
-//         //printf("input\n");
-//         scanf("%f %f", &s1, &s2);   
-//         //printf("set pwms to %f\n", pwm);
-//         bsp_motor_set_pwm(BSP_MOTOR_L, s1);
-//         bsp_motor_set_pwm(BSP_MOTOR_R, s2);
-//         if(s1 == 0.0f && s2 == 0.0f){
-//             BSP_MOTOR_L->current_pos = 0;
-//             BSP_MOTOR_R->current_pos = 0;
-//         }
-//         osDelay(50);
-//     }
-//     count_up_forever();
-// }
+    for(int i=0;i<4;i++){
+        bsp_motor_set_ctrl_mode(&bsp_motors[i], BSP_MOTOR_CTRL_MODE_NONE);
+    }
+    while(1){
+        printf("input new pwm\n");
+        float s1, s2, s3, s4;
+        //printf("input\n");
+        scanf("%f %f %f %f", &s1, &s2, &s3, &s4);   
+        printf("set pwms to %f %f %f %f\n", &s1, &s2, &s3, &s4);
+        bsp_motor_set_pwm(bsp_motor1, s1);
+        bsp_motor_set_pwm(bsp_motor2, s2);
+        bsp_motor_set_pwm(bsp_motor3, s3);
+        bsp_motor_set_pwm(bsp_motor4, s4);
+
+        osDelay(50);
+    }
+    count_up_forever();
+}
 
 // static void pos_pid_test(){
 //     bsp_motor_init();
@@ -259,10 +259,13 @@ static void go_test(){
 }
 
 
+
+
 void app_idle_task(){
-    // speed_pid_test();
-    bsp_task_create("spd", report_task, NULL, osPriorityLow2, 512);
-    go_test();
+    speed_pid_test();
+    //pwm_test();
+    //bsp_task_create("spd", report_task, NULL, osPriorityLow2, 512);
+    //go_test();
     //bsp_motor_init();
     // bsp_motor_set_pwm(bsp_motor4, -0.8);
     // while(1){

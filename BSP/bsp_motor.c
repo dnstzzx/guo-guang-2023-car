@@ -111,12 +111,12 @@ bsp_motor_t bsp_motors[BSP_MOTOR_COUNT] = {
 //     .out_limit = 0.45
 // };
 static const dn_pid_param_t default_speed_pid = {
-    .kp = 0.65f,
-    .ki = 0.25f,
-    .kd = 0.3f,
+    .kp = 0.008f,
+    .ki = 0.005f,
+    .kd = 0.01f,
     .err_limit = 10,
-    .integral_limit = 1,
-    .out_limit = 0.95
+    .integral_limit = 10,
+    .out_limit = 0.7
 };
 
 static const dn_pid_param_t default_pos_pid = {
@@ -138,7 +138,6 @@ inline static uint32_t bsp_motor_read_encoder(bsp_motor_t *dev){
 }
 
 void bsp_motor_set_pwm(bsp_motor_t *motor, float pwm){
-    //pwm = -0.7;
     if(motor->inverse)  pwm = -pwm;
     if(pwm >= 0){
         __HAL_TIM_SET_COMPARE(motor->pwm1_tim, motor->pwm1_channel, pwm * MOTOR_PWM_PERIOD);
@@ -161,12 +160,10 @@ static int32_t bsp_motor_update(bsp_motor_t *dev){
         - dev->last_encoder_state.encoder_count;
     
     if(dev->inverse)    delta *= -1;
-    if(abs(delta) * BSP_MOTOR_TASK_HZ / 1000.0f > 20) {
-        delta = 0;
-    }else{
-        dev->current_pos += delta;
-        dev->current_speed = delta * BSP_MOTOR_TASK_HZ / 1000.0f;
-    }
+
+    dev->current_pos += delta;
+    dev->current_speed = delta * (1.0f * BSP_MOTOR_TASK_HZ * 60 / BSP_MOTOR_RATE );
+    
     memcpy(&dev->last_encoder_state, &dev->encoder_state, sizeof(bsp_motor_encoder_state_t));
     __enable_irq();
     return delta;

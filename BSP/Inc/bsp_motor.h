@@ -5,11 +5,12 @@
 #include "pid.h"
 #include "stdbool.h"
 
+#define PI                  (3.1415926f)
 #define BSP_MOTOR_COUNT     (4)
-#define BSP_MOTOR_DIAMETER  (67.5f)
-#define BSP_MOTOR_PERIMETER (3.1415926f * BSP_MOTOR_DIAMETER)
-#define BSP_MOTOR_RATE      (10 * 11 * 4)
-#define BSP_MOTOR_TASK_HZ   (50)
+#define BSP_MOTOR_DIAMETER  (75)
+#define BSP_MOTOR_PERIMETER (PI * BSP_MOTOR_DIAMETER)
+#define BSP_MOTOR_RATE      (30 * 500 * 4)
+#define BSP_MOTOR_TASK_HZ   (100)
 
 typedef struct{
     uint32_t encoder_count;
@@ -37,7 +38,7 @@ typedef struct{
     bsp_motor_encoder_state_t   encoder_state;
     bsp_motor_encoder_state_t   last_encoder_state;
 
-    float              current_speed;  // 编码器计数个数每ms,反转负数
+    float              current_speed;  // rpm,反转负数
     int32_t            current_pos;    // 开机以来编码器计数算术和(反转减小)
 
     bsp_motor_ctrl_mode_t       ctrl_mode;
@@ -79,6 +80,13 @@ static inline void bsp_motor_set_speed(bsp_motor_t *motor, float speed){
 
 static inline void bsp_motor_set_ctrl_mode(bsp_motor_t *motor, bsp_motor_ctrl_mode_t mode){
     motor->ctrl_mode = mode;
+}
+
+static inline void bsp_motor_set_ctrl_mode_all(bsp_motor_ctrl_mode_t mode){
+    for(int i=0;i<BSP_MOTOR_COUNT;i++){
+        bsp_motors[i].ctrl_mode = mode;
+    }
+
 }
 
 static inline void bsp_motor_set_pos(bsp_motor_t *motor, float pos){
