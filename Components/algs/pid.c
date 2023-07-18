@@ -37,7 +37,7 @@ float pid_update(dn_pid_t* pid, float target, float measurement){
     }
 
     pid->pout = pid->param.kp * pid->err;
-    pid->iout *= 0.995;
+    pid->iout *= 0.99;
     pid->iout += pid->param.ki * pid->err;
     pid->dout = pid->param.kd * (pid->err - pid->last_err);
 
