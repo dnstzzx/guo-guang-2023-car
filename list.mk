@@ -4,6 +4,7 @@ COMPONENTS_ROOT = Components
 
 BSP_C_SOURCES = \
 bsp_uart.c \
+bsp_i2c.c \
 bsp_motor.c \
 bsp_led.c \
 bsp_init.c \
@@ -20,7 +21,8 @@ algs/pid.c \
 openocd_rtos_helper/FreeRTOS-openocd.c
 
 Components_C_INCLUDES = \
-algs/Inc
+algs/Inc \
+gw_gray \
 
 User_C_Sources = \
 $(addprefix $(BSP_ROOT)/, $(BSP_C_SOURCES)) \

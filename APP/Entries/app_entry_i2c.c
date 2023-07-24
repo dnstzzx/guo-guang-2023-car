@@ -7,7 +7,7 @@ void i2c_scan(){
         printf("\n\n");
         uint8_t data[10];
         for (uint8_t i = 0;i < 255;i+=1){
-            uint8_t re = HAL_I2C_Mem_Read(&hi2c1, i, 0, I2C_MEMADD_SIZE_8BIT, data, 1, 0xff);
+            uint8_t re = HAL_I2C_Mem_Read(&hi2c2, i, 0, I2C_MEMADD_SIZE_8BIT, data, 1, 0xff);
             if (re == HAL_OK){
                 printf("0x%02x ", i);
             }else{

@@ -54,9 +54,9 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
@@ -92,17 +92,17 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(LED4_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = BIM088_ACCEL_INT2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(BIM088_ACCEL_INT2_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BIM088_GYRO_CSB_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BIM088_GYRO_CSB_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PBPin PBPin */
+  GPIO_InitStruct.Pin = SCANNER7_Pin|SCANNER6_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB13 PB14 PB15 */
   GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
@@ -120,7 +120,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(LED3_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PGPin PGPin */
-  GPIO_InitStruct.Pin = SCANNER3_Pin|SCANNER4_Pin;
+  GPIO_InitStruct.Pin = SCANNER2_Pin|SCANNER1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
@@ -138,8 +138,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BIM088_ACCEL_CSB_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PDPin PDPin */
-  GPIO_InitStruct.Pin = SCANNER1_Pin|SCANNER2_Pin;
+  /*Configure GPIO pins : PDPin PDPin PDPin */
+  GPIO_InitStruct.Pin = SCANNER4_Pin|SCANNER3_Pin|SCANNER5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
@@ -168,9 +168,6 @@ void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);

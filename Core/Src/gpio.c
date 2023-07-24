@@ -98,12 +98,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BIM088_GYRO_CSB_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PBPin PBPin */
-  GPIO_InitStruct.Pin = SCANNER7_Pin|SCANNER6_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
   /*Configure GPIO pins : PB13 PB14 PB15 */
   GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -119,12 +113,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED3_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PGPin PGPin */
-  GPIO_InitStruct.Pin = SCANNER2_Pin|SCANNER1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BIM088_GYRO_INT4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
@@ -137,12 +125,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BIM088_ACCEL_CSB_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PDPin PDPin PDPin */
-  GPIO_InitStruct.Pin = SCANNER4_Pin|SCANNER3_Pin|SCANNER5_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BIM088_ACCEL__INT1_Pin;
