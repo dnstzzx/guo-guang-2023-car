@@ -29,9 +29,6 @@ static dn_pid_param_t pos_pid = {
     .out_limit = 5
 };
 
-static void print_pid(void *cbk_param, float target, float measurement, float output){
-    printf("%f %f %f\n", measurement, target - measurement, output);
-}
 
 static void speed_pid_test(){
     bsp_motor_t *testing_motor = bsp_motor1;

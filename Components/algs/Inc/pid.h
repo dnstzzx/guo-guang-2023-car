@@ -38,3 +38,5 @@ float pid_update(dn_pid_t *pid, float target, float measurement);
 #ifdef APP_ENTRY_ENABEL_PID_TRACER
 void pid_set_tracer_cbk(dn_pid_t *pid, pid_tracer_callback_t callback, void *cbk_param);
 #endif
+
+void pid_print(void *name, float target, float measurement, float output);

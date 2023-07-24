@@ -60,3 +60,7 @@ void pid_set_tracer_cbk(dn_pid_t* pid, pid_tracer_callback_t callback, void* cbk
     pid->tracer_callback = callback;
 }
 #endif
+
+void pid_print(void *name, float target, float measurement, float output){
+    printf("pid_%s:%f,%f,%f\n", name, measurement, target - measurement, output);
+}
