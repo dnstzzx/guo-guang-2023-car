@@ -2,6 +2,7 @@
 #include "tim.h"
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "bsp_task.h"
 #include "basic_algs.h"
 
@@ -195,6 +196,7 @@ void bsp_motor_task(void *param){
 }
 
 void bsp_motor_init(){
+    const bool debug_pid = false;
     _for_each_dev(
         dev->target_speed = 0;
         dev->ctrl_mode = BSP_MOTOR_CTRL_MODE_NONE;
@@ -223,6 +225,15 @@ void bsp_motor_init(){
         bsp_motor_config_speed_pid(dev, &default_speed_pid);
         bsp_motor_config_pos_pid(dev, &default_pos_pid);
     )
+    if(debug_pid){
+        static char *names[4] = {
+            "m1", "m2", "m3", "m4"
+        };
+        _for_each_dev(
+            dev->speed_pid.tracer_callback = pid_print;
+            dev->speed_pid.tracer_cbk_param = names[_i];
+        );
+    }
 
     bsp_motor_t *dev;
     osTimerAttr_t attr = {

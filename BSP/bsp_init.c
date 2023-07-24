@@ -6,14 +6,16 @@
 #include "cmsis_os.h"
 
 void bsp_init(){
-    bsp_uart_init();
     #ifdef APP_ENTRY_ENABLE_MOTOR
-    bsp_motor_init();
+        bsp_motor_init();
     #endif
+    osDelay(1000);
+    bsp_uart_init();
 }
 
 void bsp_init_task(void *p){
     bsp_init();
+    
     bsp_task_create("main", bsp_idle_task, NULL, osPriorityNormal, 512);
     osThreadTerminate(osThreadGetId());
 }

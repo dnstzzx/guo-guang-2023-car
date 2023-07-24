@@ -27,16 +27,17 @@ void bsp_chasis_set(bsp_chasis_state *target){
     float t1 = target->vy;
     float t2 = target->vx;
     float t3 = deg_to_rad(target->vw) * (BSP_CHASIS_WHEEL_TRACK + BSP_CHASIS_WHEEL_BASE) / 2;
-    float spds[] = {
-        (t1 - t2 + t3),
-        (t1 + t2 - t3),
-        (t1 - t2 - t3),
-        (t1 + t2 + t3)
-    };
+    
+    float spd0 = t1 - t2 + t3;
+    float spd1 = t1 + t2 - t3; 
+    float spd2 = t1 - t2 - t3;
+    float spd3 = t1 + t2 + t3;
 
-    for(int i=0;i<4;i++){
-        bsp_motor_set_speed(reordered_motors[i], rpm_from_mmps(spds[i]));
-    }
+    bsp_motor_set_speed(reordered_motors[0], rpm_from_mmps(spd0));
+    bsp_motor_set_speed(reordered_motors[1], rpm_from_mmps(spd1));
+    bsp_motor_set_speed(reordered_motors[2], rpm_from_mmps(spd2)); 
+    bsp_motor_set_speed(reordered_motors[3], rpm_from_mmps(spd3));
+    
 }
 
 void bsp_chasis_get(bsp_chasis_state *result){
