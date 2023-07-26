@@ -22,6 +22,31 @@
         osDelay(TICK_MS); \
         bsp_scanner_group_update_all(); \
     }
+
+#define calc_spd() \
+    ((delta == 0.0f && bias == 0.0f) ?  BASE_SPEED * 1.3 : BASE_SPEED)
+
+#define line_straight_def(enter, exit, backward_mode)\
+    keep_in_line_reset(backward_mode);\
+    bsp_led_set(BSP_LED1, true);\
+    for(int i=0;i<count-1;i++){\
+        keep_in_line_until(enter, calc_spd());\
+        keep_in_line_until(exit, calc_spd());\
+    }\
+    keep_in_line_until(enter, BASE_SPEED);\
+    line_half(BASE_SPEED);\
+    line_stop();\
+    bsp_led_set(BSP_LED1, false);\
+
+
+#define logical_set_speed(dx, dy, dw) \
+    if(line_inverse_mode){ \
+        bsp_chasis_set_speed(-1 * (dx), -1 * (dy), dw); \
+    }else{ \
+        bsp_chasis_set_speed(dx, dy, dw); \
+    }
+
+
 static inline bool check_left(bsp_scanner_group_t *group){
     return group->datas[0].digital;
 }
@@ -47,4 +72,12 @@ static inline float group_pos(bsp_scanner_group_t *group){
     
     printf("error: no matching group pos mask\n");
     return 0;
+}
+
+static inline void print_scanner_group(const char *preffix, bsp_scanner_group_t *group){
+    printf("%s:");
+    for(int i=0;i<BSP_SCANNER_COUNT;i++){
+        printf(" %d", group->datas[i].digital);
+    }
+    printf("\n");
 }

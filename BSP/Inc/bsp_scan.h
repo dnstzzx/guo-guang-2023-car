@@ -9,7 +9,7 @@
 
 typedef struct{
     bool digital;   // 黑1白0
-    uint8_t analog;
+    //uint8_t analog;
 } bsp_scanner_data_t;
 
 typedef struct{

@@ -117,7 +117,7 @@ static const dn_pid_param_t default_speed_pid = {
     .kd = 0.01f,
     .err_limit = 10,
     .integral_limit = 10,
-    .out_limit = 0.7
+    .out_limit = 0.95
 };
 
 static const dn_pid_param_t default_pos_pid = {

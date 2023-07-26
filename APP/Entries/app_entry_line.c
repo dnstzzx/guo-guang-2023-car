@@ -11,11 +11,17 @@ static void hdlr_straight(command_t *cmd){
         printf("err:args count != 1\n");
         return;
     }
-    int count = atoi(cmd->args_str[0]);
+    int arg0 = atoi(cmd->args_str[0]);
     if(strcmp(cmd->cmd, "l") == 0){
-        line_straight_l(count);
+        line_straight_l(arg0);
     }else if(strcmp(cmd->cmd, "r") == 0){
-        line_straight_r(count);
+        line_straight_r(arg0);
+    }else if(strcmp(cmd->cmd, "bl") == 0){
+        line_backward_straight_l(arg0);
+    }else if(strcmp(cmd->cmd, "br") == 0){
+        line_backward_straight_r(arg0);
+    }else if(strcmp(cmd->cmd, "f") == 0){
+        line_straight_distance(arg0);
     }
 }
 
@@ -28,19 +34,29 @@ static void hdlr_turn(command_t *cmd){
         line_turn_left(count);
     }else if(strcmp(cmd->cmd, "R") == 0){
         line_turn_right(count);
+    }else if(strcmp(cmd->cmd, "bL") == 0){
+        line_backward_turn_left(count);
+    }else if(strcmp(cmd->cmd, "bR") == 0){
+        line_backward_turn_right(count);
     }
 }
 
 static void hdlr_stop(command_t *cmd){
     bsp_chasis_set_speed(0, 0, 0);
+    osDelay(2000);
 }
 
 static command_handler_t handlers[] = {
     {.cmd_name="l", .func=hdlr_straight},
     {.cmd_name="r", .func=hdlr_straight},
+    {.cmd_name="bl", .func=hdlr_straight},
+    {.cmd_name="br", .func=hdlr_straight},
+    {.cmd_name="f", .func=hdlr_straight},
     {.cmd_name="s", .func=hdlr_stop},
     {.cmd_name="L", .func=hdlr_turn},
-    {.cmd_name="R", .func=hdlr_turn}
+    {.cmd_name="R", .func=hdlr_turn},
+    {.cmd_name="bL", .func=hdlr_turn},
+    {.cmd_name="bR", .func=hdlr_turn}
 };
 
 

@@ -43,12 +43,12 @@ void command_read_cmd(command_t *cmd){
     cmd->cmd = buffer;
 
     printf("READ\n");
-    printf("name: %s\narg count:%d\n", cmd->cmd, cmd->args_count);
-    printf("args:");
-    for(int i=0;i<cmd->args_count;i++){
-        printf(" %s,", cmd->args_str[i]);
-    }
-    printf("\n");
+    // printf("name: %s\narg count:%d\n", cmd->cmd, cmd->args_count);
+    // printf("args:");
+    // for(int i=0;i<cmd->args_count;i++){
+    //     printf(" %s,", cmd->args_str[i]);
+    // }
+    // printf("\n");
 }
 
 bool command_process_cmd(command_t *cmd, command_handler_t handlers[], uint32_t handlers_count){

@@ -10,7 +10,7 @@
 #define BSP_MOTOR_DIAMETER  (75)
 #define BSP_MOTOR_PERIMETER (PI * BSP_MOTOR_DIAMETER)
 #define BSP_MOTOR_RATE      (30 * 500 * 4)
-#define BSP_MOTOR_TASK_HZ   (200)
+#define BSP_MOTOR_TASK_HZ   (500)
 
 typedef struct{
     uint32_t encoder_count;
