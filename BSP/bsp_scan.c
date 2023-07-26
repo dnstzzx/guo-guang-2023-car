@@ -1,6 +1,7 @@
 #include "bsp_scan.h"
 #include "gw_gray.h"
 #include "main.h"
+#include <stdio.h>
 
 #define BSP_SCANNER_GROUP1_I2C_DEV  (&bsp_i2c_dev_scanner)
 #define BSP_SCANNER_GROUP1_I2C_ADDR (0b10011110)
@@ -16,7 +17,10 @@ bool bsp_scanner_group_update(bsp_scanner_group_t *group){
     
     static uint8_t digital_data;
     static uint8_t analog_data[BSP_SCANNER_COUNT];
-    bsp_i2c_master_read_reg(group->dev, group->i2c_addr, GW_GRAY_DIGITAL_MODE, &digital_data, 1);
+    if(bsp_i2c_master_read_reg(group->dev, group->i2c_addr, GW_GRAY_DIGITAL_MODE, &digital_data, 1) != HAL_OK){
+        printf("read scanner failed\n");
+        return false;
+    }
     group->digital_byte = ~digital_data;
     for(int i=0;i<BSP_SCANNER_COUNT;i++){
         group->datas[i].digital = (digital_data & 1) == 0;
