@@ -73,6 +73,10 @@ void Error_Handler(void);
 #define BIM088_GYRO_CSB_GPIO_Port GPIOB
 #define LED3_Pin GPIO_PIN_3
 #define LED3_GPIO_Port GPIOG
+#define BTN_MID_Pin GPIO_PIN_6
+#define BTN_MID_GPIO_Port GPIOG
+#define BTN_LEFT_Pin GPIO_PIN_7
+#define BTN_LEFT_GPIO_Port GPIOG
 #define MOTOR_1_PWM2_Pin GPIO_PIN_6
 #define MOTOR_1_PWM2_GPIO_Port GPIOC
 #define MOTOR_2_PWM2_Pin GPIO_PIN_7
@@ -94,6 +98,10 @@ void Error_Handler(void);
 #define BIM088_GYRO_INT4_EXTI_IRQn EXTI15_10_IRQn
 #define BIM088_ACCEL_CSB_Pin GPIO_PIN_12
 #define BIM088_ACCEL_CSB_GPIO_Port GPIOC
+#define BTN_RES_Pin GPIO_PIN_0
+#define BTN_RES_GPIO_Port GPIOD
+#define BTN_SET_Pin GPIO_PIN_1
+#define BTN_SET_GPIO_Port GPIOD
 #define BIM088_ACCEL__INT1_Pin GPIO_PIN_3
 #define BIM088_ACCEL__INT1_GPIO_Port GPIOD
 #define BIM088_ACCEL__INT1_EXTI_IRQn EXTI3_IRQn

@@ -3,6 +3,7 @@
 #include "bsp_task.h"
 #include "bsp_motor.h"
 #include "app_entry.h"
+#include "bsp_btn.h"
 #include "cmsis_os.h"
 
 void bsp_init(){
@@ -11,6 +12,7 @@ void bsp_init(){
     #endif
     osDelay(1000);
     bsp_uart_init();
+    bsp_btn_init();
 }
 
 void bsp_init_task(void *p){

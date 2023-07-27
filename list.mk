@@ -9,13 +9,15 @@ bsp_motor.c \
 bsp_led.c \
 bsp_init.c \
 bsp_scan.c \
-bsp_chasis.c
+bsp_chasis.c \
+bsp_btn.c
 
 APP_C_SOURCES = \
 app_entry.c \
 line.c \
 command.c \
-cmd_set.c
+cmd_set.c \
+btn_report.c
 
 Components_C_SOURCES = \
 algs/fifo.c \
