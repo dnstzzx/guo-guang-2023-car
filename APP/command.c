@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "command.h"
+#include "report.h"
 
 #define BUFFER_SIZE 256
 
@@ -36,13 +37,13 @@ void command_read_cmd(command_t *cmd){
     }while(c != ';' && length != BUFFER_SIZE);
     if(c != ';'){
         while(getchar()!=';');
-        printf("READ\n");
-        printf("ERR:cmd too long\n");
+        report_send_wrapper("READ");
+        report_send_wrapper("ERR", "cmd too long");
         goto start_read;
     }
     cmd->cmd = buffer;
 
-    printf("READ\n");
+    report_send_wrapper("READ");
     // printf("name: %s\narg count:%d\n", cmd->cmd, cmd->args_count);
     // printf("args:");
     // for(int i=0;i<cmd->args_count;i++){
@@ -51,15 +52,31 @@ void command_read_cmd(command_t *cmd){
     // printf("\n");
 }
 
-bool command_process_cmd(command_t *cmd, command_handler_t handlers[], uint32_t handlers_count){
-    for(int i=0;i<handlers_count;i++){
-        command_handler_t *hdler = &handlers[i];
+bool command_process_cmd(command_t *cmd, cmd_hdler_set *hdler_set){
+    for(int i=0;i<hdler_set->hdler_count;i++){
+        command_handler_t *hdler = &hdler_set->handlers[i];
         if(strcmp(cmd->cmd, hdler->cmd_name) == 0){
             hdler->func(cmd);
-            printf("OK\n");
+            report_send_wrapper("OK");
             return true;
         }
     }
-    printf("ERR:no matching cmd\n");
     return false;
+}
+
+void command_main(cmd_hdler_set *using_cmd_hdler_set[], uint32_t cmd_hdler_set_count){
+    static command_t cmd;
+    while(1){
+        command_read_cmd(&cmd);
+        bool matched = false;
+        for(int i=0;i<cmd_hdler_set_count;i++){
+            if(command_process_cmd(&cmd, using_cmd_hdler_set[i])){
+                matched = true;
+                break;
+            }
+        }
+        if(!matched){
+            report_send_wrapper("ERR", "no matching cmd", cmd.cmd);
+        }
+    }
 }

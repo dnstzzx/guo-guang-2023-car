@@ -8,6 +8,7 @@
 #include "line_macros.h"
 #include "pid.h"
 #include "bsp_led.h"
+#include "report.h"
 
 #define TICK_MS (1)
 
@@ -64,10 +65,10 @@ void keep_in_line(float speed){
         fail_count ++;
         if(fail_count >= 100){
             logical_set_speed(0, 0, 0);
-            printf("ERR: OUT OF LINE\n");
+            report_send_wrapper("ERR", "OUT OF LINE");
             print_scanner_group("front", bsp_scanner_group_front);
             print_scanner_group("back", bsp_scanner_group_back);
-            printf("ERR: LOCKED\n");
+            report_send_wrapper("LOCKED");
             osDelay(3000);
             __set_FAULTMASK(1);
            HAL_NVIC_SystemReset(); 

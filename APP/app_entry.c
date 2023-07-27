@@ -17,5 +17,5 @@ void count_up_forever(){
 //#include "app_entry_echo.c"
 //#include "app_entry_motor.c"
 //#include "app_entry_rc.c"
-#include "app_entry_line.c"
+#include "app_entry_main.c"
 //#include "app_entry_scanner.c"

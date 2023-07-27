@@ -75,7 +75,7 @@ static inline float group_pos(bsp_scanner_group_t *group){
 }
 
 static inline void print_scanner_group(const char *preffix, bsp_scanner_group_t *group){
-    printf("%s:");
+    printf("%s:", preffix);
     for(int i=0;i<BSP_SCANNER_COUNT;i++){
         printf(" %d", group->datas[i].digital);
     }

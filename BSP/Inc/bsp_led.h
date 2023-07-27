@@ -20,7 +20,7 @@ extern bsp_led_dev_t bsp_leds[BSP_LED_COUNT];
 #define BSP_LED4 (&bsp_leds[3])
 
 static inline bool bsp_led_get(bsp_led_dev_t *led){
-    return led->port->ODR & led->pin != 0;
+    return (led->port->ODR & led->pin) != 0;
 }
 
 static inline void bsp_led_set(bsp_led_dev_t *led, bool on){

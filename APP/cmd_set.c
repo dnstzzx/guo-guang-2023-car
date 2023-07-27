@@ -1,10 +1,36 @@
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+#include "cmsis_os.h"
 #include "line.h"
 #include "bsp_motor.h"
 #include "bsp_chasis.h"
 #include "command.h"
-#include <stdio.h>
+#include "report.h"
+
+// ctrl cmd set
+
+static void hdlr_echo(command_t *cmd){
+    report_t rpt = {
+        .name = "OHCE",
+        .args_count = cmd->args_count,
+        .args_str = cmd->args_str
+    };
+    report_send(&rpt);
+}
+
+static command_handler_t ctrl_handlers[] = {
+    {.cmd_name = "ECHO", .func = hdlr_echo}
+};
+
+cmd_hdler_set cmd_set_ctrl = {
+    .handlers = ctrl_handlers,
+    .hdler_count = sizeof(ctrl_handlers) / sizeof(command_handler_t)
+};
+
+
+// line cmd set
 
 static void hdlr_straight(command_t *cmd){
     if(cmd->args_count != 1){
@@ -46,7 +72,7 @@ static void hdlr_stop(command_t *cmd){
     osDelay(2000);
 }
 
-static command_handler_t handlers[] = {
+static command_handler_t line_handlers[] = {
     {.cmd_name="l", .func=hdlr_straight},
     {.cmd_name="r", .func=hdlr_straight},
     {.cmd_name="bl", .func=hdlr_straight},
@@ -59,8 +85,7 @@ static command_handler_t handlers[] = {
     {.cmd_name="bR", .func=hdlr_turn}
 };
 
-
-void app_idle_task(){
-    bsp_motor_set_ctrl_mode_all(BSP_MOTOR_CTRL_MODE_SPEED);
-    command_main(handlers, sizeof(handlers) / sizeof(command_handler_t));
-}
+cmd_hdler_set cmd_set_line = {
+    .handlers = line_handlers,
+    .hdler_count = sizeof(line_handlers) / sizeof(command_handler_t)
+};

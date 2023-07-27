@@ -3,7 +3,6 @@
 
 #define CMD_MAX_ARG_COUNT 16
 
-
 typedef struct{
     char *cmd;
     uint8_t args_count;
@@ -17,13 +16,15 @@ typedef struct{
     cmd_handler_func_t func;
 } command_handler_t;
 
-void command_read_cmd(command_t *cmd);
-bool command_process_cmd(command_t *cmd, command_handler_t handlers[], uint32_t handlers_count);
+typedef struct{
+    command_handler_t *handlers;
+    uint32_t hdler_count;
+} cmd_hdler_set;
 
-static inline void command_main(command_handler_t handlers[], uint32_t handlers_count){
-    static command_t cmd;
-    while(1){
-        command_read_cmd(&cmd);
-        command_process_cmd(&cmd, handlers, handlers_count);
-    }
-}
+void command_read_cmd(command_t *cmd);
+
+// returns: whether any command hdler matched
+bool command_process_cmd(command_t *cmd, cmd_hdler_set *hdler_set);
+
+
+void command_main(cmd_hdler_set *using_cmd_hdler_set[], uint32_t cmd_hdler_set_count);

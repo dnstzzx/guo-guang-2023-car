@@ -14,7 +14,8 @@ bsp_chasis.c
 APP_C_SOURCES = \
 app_entry.c \
 line.c \
-command.c
+command.c \
+cmd_set.c
 
 Components_C_SOURCES = \
 algs/fifo.c \
