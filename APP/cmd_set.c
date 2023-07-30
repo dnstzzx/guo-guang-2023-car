@@ -12,12 +12,22 @@
 // ctrl cmd set
 
 static void hdlr_echo(command_t *cmd){
-    report_t rpt = {
-        .name = "OHCE",
-        .args_count = cmd->args_count,
-        .args_str = cmd->args_str
-    };
-    report_send(&rpt);
+    if(cmd->args_count == 0){
+        report_t rpt = {
+            .name = "OHCE",
+            .args_count = cmd->args_count,
+            .args_str = cmd->args_str
+        };
+        report_send(&rpt);
+    }else{
+        report_t rpt = {
+            .name = cmd->args_str[0],
+            .args_count = cmd->args_count - 1,
+            .args_str = &cmd->args_str[1]
+        };
+        report_send(&rpt);
+    }
+
 }
 
 static command_handler_t ctrl_handlers[] = {
@@ -48,6 +58,10 @@ static void hdlr_straight(command_t *cmd){
         line_backward_straight_r(arg0);
     }else if(strcmp(cmd->cmd, "f") == 0){
         line_straight_distance(arg0);
+    }else if(strcmp(cmd->cmd, "bf") == 0){
+        line_backward_straight_distance(arg0);
+    }else if(strcmp(cmd->cmd, "go") == 0){
+        line_go(arg0);
     }
 }
 
@@ -69,7 +83,7 @@ static void hdlr_turn(command_t *cmd){
 
 static void hdlr_stop(command_t *cmd){
     bsp_chasis_set_speed(0, 0, 0);
-    osDelay(2000);
+    osDelay(100);
 }
 
 static command_handler_t line_handlers[] = {
@@ -78,6 +92,8 @@ static command_handler_t line_handlers[] = {
     {.cmd_name="bl", .func=hdlr_straight},
     {.cmd_name="br", .func=hdlr_straight},
     {.cmd_name="f", .func=hdlr_straight},
+    {.cmd_name="bf", .func=hdlr_straight},
+    {.cmd_name="go", .func=hdlr_straight},
     {.cmd_name="s", .func=hdlr_stop},
     {.cmd_name="L", .func=hdlr_turn},
     {.cmd_name="R", .func=hdlr_turn},

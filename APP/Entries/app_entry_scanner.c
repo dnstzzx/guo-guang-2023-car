@@ -12,7 +12,7 @@ void app_idle_task(){
             }
             printf("\nanalog:");
             for(int j=0;j<BSP_SCANNER_COUNT;j++){
-                printf(" %d", bsp_scanner_groups[i].datas[j].analog);
+                //printf(" %d", bsp_scanner_groups[i].datas[j].analog);
             }
             printf("\n");
         }

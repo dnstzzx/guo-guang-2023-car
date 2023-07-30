@@ -10,17 +10,17 @@ static bsp_btn_dev_t *report_btns[] = {
 static void callback(bsp_btn_dev_t *dev, bsp_btn_event_type_t event_type){
     const char *btn_name = NULL;
     if(dev == bsp_btn_dev_mid){
-        btn_name = "MID";
+        btn_name = "BTN_MID";
     }else if(dev == bsp_btn_dev_set){
-        btn_name = "SET";
+        btn_name = "BTN_SET";
     }else if(dev == bsp_btn_dev_res){
-        btn_name = "RES";
+        btn_name = "BTN_RES";
     }
 
     if(btn_name == NULL)
         return;
 
-    report_send_wrapper("BTN", btn_name, "RELEASED") 
+    report_send_wrapper(btn_name, "RELEASED") 
 }
 
 void btn_report_init(){
